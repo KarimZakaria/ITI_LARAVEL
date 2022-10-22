@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="mb-3">
-        <a class="btn btn-success" href="{{ route('users.create') }}">
+        <a class="btn btn-success" href="{{ route('users.index') }}">
             Users
         </a>
     </div>
@@ -17,16 +17,31 @@
                 @csrf
                 <div class="form-group mt-3">
                     <label class="mt-1"><strong> Name : </strong></label>
-                    <input class="form-control" type="text" name="name" id="name">
+                    <input class="@error('name') is-invalid @enderror form-control" value="{{ old('name') }}"
+                        type="text" name="name" id="name">
                 </div>
+                @error('name')
+                    <div class="alert alert-danger mt-2">{{ $message }}</div>
+                @enderror
+
                 <div class="form-group mt-3">
                     <label class="mt-1"><strong>Email : </strong></label>
-                    <input class="form-control" type="email" name="email" id="email">
+                    <input class="@error('email') is-invalid @enderror form-control" value="{{ old('email') }}"
+                        type="email" name="email" id="email">
                 </div>
+                @error('email')
+                    <div class="alert alert-danger mt-2">{{ $message }}</div>
+                @enderror
+
                 <div class="form-group mt-3 pb-3">
                     <label class="mt-1"><strong>Password : </strong></label>
-                    <input class="form-control" type="password" name="password" id="password">
+                    <input class="@error('password') is-invalid @enderror form-control" value="{{ old('password') }}"
+                        type="password" name="password" id="password">
                 </div>
+                @error('password')
+                    <div class="alert alert-danger mt-2">{{ $message }}</div>
+                @enderror
+
                 <button type="submit" class="btn btn-primary">Add User</button>
             </form>
         </div>

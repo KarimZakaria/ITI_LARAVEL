@@ -37,7 +37,11 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $user = $request->all();
+        $user = $request->validate([
+            'name' => 'required|min:3|max:20',
+            'email' => "required",
+            'password' => 'required|min:6'
+        ]);
         User::create($user);
         return redirect(route('users.index'))->with(['success' => 'User Added Successfully']);
     }
@@ -75,8 +79,12 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = User::findOrFail($id);
-        $user->update($request->all());
+        $user = $request->validate([
+            'name' => 'required|min:3|max:20',
+            'password' => 'required|min:6',
+            'email' => 'required|email'
+        ]);
+        $user = User::findOrFail($id)->update($user);
         return redirect(route('users.index'))->with(['success' => 'User Updated Successfully']);
     }
 
